@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        #header {
+            background-color:black;
+            color:white;
+            text-align:center;
+            padding:5px;
+        }
+        #nav {
+            line-height:30px;
+            background-color:#eeeeee;
+            height:300px;
+            width:100px;
+            float:left;
+            padding:5px;
+        }
+        #section {
+            width:350px;
+            float:left;
+            padding:10px;
+        }
+        #footer {
+            background-color:black;
+            color:white;
+            clear:both;
+            text-align:center;
+            padding:5px;
+        }
+    </style>
+</head>
+<body>
+<div th:id="header">
+    <h1>Talk Space</h1>
+</div>
+<div id="moods">
+    <b>说说列表:</b><br>
+    <div th:each items="${moods}" var="mood">
+        ------------------------------------
+        <br>
+        <b>用户：</b><span id="account">${mood.userName}</span><br>
+        <b>说说内容：</b><span id="content">${mood.content}</span><br>
+        <b>发表时间：</b>
+        <span id="publish_time">
+                ${mood.publishTime}
+        </span><br>
+        <b>点赞数：</b><span id="praise_num">${mood.praiseNum}</span><br>
+        <div style="margin-left: 350px">
+            <a id="praise" href="/mood/${mood.id}/praiseForRedis?userId=${mood.userId}">赞</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

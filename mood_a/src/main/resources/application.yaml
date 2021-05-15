@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    name: ssm-project
+    url: jdbc:mysql://127.0.0.1:3306/ssm-project?serverTimezone=GMT&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#  activemq:
+#    broker-url: tcp://localhost:8161
+#    user: admin
+#    password: admin
+#  redis:
+#    jedis:
+#      pool:
+#        min-idle: 100
+#        max-idle: 300
+#        max-wait: 30000
+#    host: 127.0.0.1
+#    port: 6379
+#    password:
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8081
+  tomcat:
+    accesslog:
+      enabled: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    cache-enabled: true
+    aggressive-lazy-loading: true
+  type-aliases-package: com.example.mood.dao
+#  config-location: mybatis-config.xml
+
+
+#mapper_path: /mapper/**.xml
+#
+#entity_package: com.ke.model
+
+
+

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html;UTF-8"/>
+  <style>
+    #header {
+      background-color:black;
+      color:white;
+      text-align:center;
+      padding:5px;
+    }
+    #nav {
+      line-height:30px;
+      background-color:#eeeeee;
+      height:300px;
+      width:100px;
+      float:left;
+      padding:5px;
+    }
+    #section {
+      width:350px;
+      float:left;
+      padding:10px;
+    }
+    #footer {
+      background-color:black;
+      color:white;
+      clear:both;
+      text-align:center;
+      padding:5px;
+    }
+  </style>
+</head>
+<body>
+<div th:id="header">
+  <h1>Talk Space</h1>
+</div>
+
+</div>
+<div id="moods">
+  <b>说说列表:</b><br>
+  <div th:each="mood : ${moods}">
+    ------------------------------------
+    <br>
+    <b>用户：</b><span id="account" th:text="${mood.userId}"></span><br>
+    <b>说说内容：</b><span id="content" th:text="${mood.content}"></span><br>
+    <b>发表时间：</b>
+    <span id="publish_time" th:text="${mood.publishTime}">
+
+        </span><br>
+    <b>点赞数：</b><span id="praise_num" th:text="${mood.praiseNum}"></span><br>
+    <div style="margin-left: 350px">
+      <a id="praise" href="/mood/${mood.id}/praise?userId=${mood.userId}">赞</a>
+    </div>
+  </div>
+</div>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Content</th>
+    <th>PublishTime</th>
+    <th>PraiseNum</th>
+    <th>Action</th>
+  </tr>
+  <tr th:each="mood : ${moods}">
+    <td th:text="${mood.getUserId()}"></td>
+    <td th:text="${mood.getContent()}"></td>
+    <td th:text="${mood.getPublishTime()}"></td>
+    <td th:text="${mood.getPraiseNum()}"></td>
+<!--    <td th:href="/mood/${mood.id}/praise">赞</td>-->
+    <td><div style="margin-left: 50px">
+      <a id="praise1" th:href="@{/mood/praise(moodId=${mood.id},userId=${mood.userId})}">赞</a>
+    </div></td>
+
+  </tr>
+</table>
+</body>
+</html>
