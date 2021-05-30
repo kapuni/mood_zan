@@ -14,6 +14,6 @@ public interface MoodService {
     boolean update(@Param("mood") Mood mood);
     Mood findById(String id);
 
-//    boolean praiseMoodForRedis(String userId,String moodId);
-//    List<MoodDao> findAllForRedis();
+    boolean praiseMoodForRedis(String userId,String moodId);
+    List<Mood> findAllForRedis();
 }

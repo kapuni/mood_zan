@@ -9,10 +9,12 @@ import com.example.mood.model.Mood;
 import com.example.mood.model.UserMoodPraiseRel;
 import com.example.mood.service.MoodService;
 import com.example.mood.service.UserService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,47 +86,35 @@ public class MoodSericeImpl implements MoodService {
         return moodDao.findById(id);
     }
 
-//    @Resource
-//    private RedisTemplate redisTemplate;
-//    private static final String PRAISE_HASH_KEY = "springmvc.mybatis.boot.mood.id.list.key";
+    @Resource
+    private RedisTemplate redisTemplate;
+    private static final String PRAISE_HASH_KEY = "springmvc.mybatis.boot.mood.id.list.key";
 //    @Resource
 //    private MoodProducer moodProducer;
 //    private static Destination destination = new ActiveMQQueue("ke.queue.high.concurrency.praise");
-//    @Override
-//    public boolean praiseMoodForRedis(String userId, String moodId) {
-//        MoodDTO moodDTO = new MoodDTO();
-//        moodDTO.setUserId(userId);
-//        moodDTO.setId(moodId);
-//
+    @Override
+    public boolean praiseMoodForRedis(String userId, String moodId) {
+
+        redisTemplate.opsForValue().set(PRAISE_HASH_KEY,moodId);
+        redisTemplate.opsForValue().set(moodId,userId);
+        return false;
+//        mq
+//        Mood mood = new Mood();
+//        mood.setId(userId);
+//        mood.setUserId(userId);
 //        moodProducer.sendMessage(destination,moodDTO);
-//
-//        return false;
-//    }
+
+    }
 
     @Resource
     private UserService userService;
-//    @Override
-//    public List<MoodDTO> findAllForRedis() {
-//        List<Mood> moodList = moodDao.findAll();
-//        if (CollectionUtils.isEmpty(moodList)){
-//            return Collections.EMPTY_LIST;
-//        }
-//        List<MoodDTO> moodDTOList = new ArrayList<MoodDTO>();
-//        for (Mood mood:moodList){
-//            MoodDTO moodDTO = new MoodDTO();
-//            moodDTO.setId(mood.getId());
-//            moodDTO.setUserId(mood.getUserId());
-//
-//            moodDTO.setPraiseNum(mood.getPraiseNum() + redisTemplate.opsForSet().size(mood.getId()).intValue());
-//            moodDTO.setPublishTime(mood.getPublishTime());
-//            moodDTO.setContent(mood.getContent());
-//
-//            User user = userService.find(mood.getUserId());
-//            moodDTO.setUserName(user.getName());
-//            moodDTO.setUserAccount(user.getAccount());
-//            moodDTOList.add(moodDTO);
-//
-//        }
-//        return moodDTOList;
-//    }
+    @Override
+    public List<Mood> findAllForRedis() {
+        List<Mood> moodList = moodDao.findAll();
+        if (CollectionUtils.isEmpty(moodList)){
+            return Collections.EMPTY_LIST;
+        }
+
+        return moodList;
+    }
 }
